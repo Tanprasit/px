@@ -4,21 +4,23 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateCardsTable extends Migration
 {
-    /**
+ /**
      * Run the migrations.
      *
      * @return void
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        //
+        Schema::create('cards', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->string('house_name_number');
+            $table->string('address_line_1');
+            $table->string('address_line_2');
+            $table->string('town_city');
+            $table->string('county');
             $table->timestamps();
         });
     }
@@ -30,6 +32,7 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('users');
+        //
+        Schema::drop('cards');
     }
 }

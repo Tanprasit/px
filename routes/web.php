@@ -12,13 +12,15 @@
 */
 
 Route::get('/', function () {
-    return view('services.index');
+    return view('home');
 });
 
 Auth::routes();
 
-Route::get('customer/services', function () {
-      return view('services.index');
+Route::get('/home', function () {
+      return view('home');
 });
 
-Route::get('/home', 'HomeController@index');
+Route::get('/services', function () {
+      return view('services.index');
+});

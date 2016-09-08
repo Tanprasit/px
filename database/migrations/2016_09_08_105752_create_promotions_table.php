@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateServiceTable extends Migration
+class CreatePromotionsTable extends Migration
 {
-    /**
+ /**
      * Run the migrations.
      *
      * @return void
@@ -14,10 +14,12 @@ class CreateServiceTable extends Migration
     public function up()
     {
         //
-        Schema::create('services', function (Blueprint $table) {
+        Schema::create('promotions', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('order_id');
             $table->string('name');
-            $table->float('cost');
+            $table->float('code');
+            $table->boolean('active');
             $table->timestamps();
         });
     }
@@ -30,6 +32,6 @@ class CreateServiceTable extends Migration
     public function down()
     {
         //
-        Schema::drop('services');
+        Schema::drop('promotions');
     }
 }

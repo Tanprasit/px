@@ -1,0 +1,12 @@
+.jumbotron {
+      background: rgb(255, 255, 255); /* This is for ie8 and below */
+      background: rgba(255, 255, 255, 0.5); 
+}
+
+#top-section {
+      background: url('/img/domestic-house-bg.jpg') no-repeat center;
+}
+
+#bottom-section {
+      background: url('/img/domestic-house-bg.jpg') no-repeat center;     
+}

@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEmployeeTable extends Migration
+class CreateAddressesTable extends Migration
 {
-    /**
+ /**
      * Run the migrations.
      *
      * @return void
@@ -14,15 +14,13 @@ class CreateEmployeeTable extends Migration
     public function up()
     {
         //
-        Schema::create('employees', function (Blueprint $table) {
+        Schema::create('addresses', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('password');
-            $table->string('email')->unique();
-            $table->string('mobile_number');
-            $table->rememberToken();
+            $table->string('house_name_number');
+            $table->string('address_line_1');
+            $table->string('address_line_2');
+            $table->string('town_city');
+            $table->string('county');
             $table->timestamps();
         });
     }
@@ -35,6 +33,6 @@ class CreateEmployeeTable extends Migration
     public function down()
     {
         //
-        Schema::drop('employees');
+        Schema::drop('addresses');
     }
 }
