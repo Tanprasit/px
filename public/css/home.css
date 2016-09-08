@@ -1,12 +1,34 @@
-.jumbotron {
-      background: rgb(255, 255, 255); /* This is for ie8 and below */
-      background: rgba(255, 255, 255, 0.5); 
+.carousel img {
+      min-width: 100%;
+      margin:0 auto;
 }
 
-#top-section {
-      background: url('/img/domestic-house-bg.jpg') no-repeat center;
+.carousel .item {
+    width:100%;
+    height:auto;
+    max-height: 500px;
 }
 
-#bottom-section {
-      background: url('/img/domestic-house-bg.jpg') no-repeat center;     
+.carousel-inner > .item > img {
+      min-width:100%;
+      height:auto;
+}
+
+.blur {
+    -webkit-filter: blur(0.5px);
+    filter: blur(0.5px);
+}
+
+.carousel-caption {
+      margin-bottom: 5vh;
+}
+
+.carousel-caption p {
+      font-size:  1.4em;
+      font-family: "Mark"; 
+}
+
+.carousel-caption h1 {
+      font-family: "Mark"; 
+      font-weight: 700;
 }

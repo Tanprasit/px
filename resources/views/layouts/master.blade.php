@@ -21,8 +21,7 @@
 </head>
 <body>
       @include('widgets.navbar')
-      <div class="container-fluid">
-            @yield('body')
-      </div>
+      
+      @yield('body')
 </body>
 </html>
