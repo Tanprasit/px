@@ -12,14 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('landing');
 });
 
 Auth::routes();
-
-Route::get('/home', function () {
-      return view('home');
-});
 
 Route::get('/services', function () {
       return view('services.index');
