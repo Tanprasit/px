@@ -15,8 +15,15 @@ Route::get('/', function () {
     return view('landing');
 });
 
-Auth::routes();
-
-Route::get('/services', function () {
-      return view('services.index');
+Route::get('/', function () {
+    return view('landing');
 });
+
+// Setup routes for login and registration
+Route::get('/sign-in', function () {
+      return view('auth.login');
+})->name('login');
+
+Route::get('register', function () {
+      return view('auth.register');
+})->name('register');

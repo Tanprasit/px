@@ -1,11 +1,19 @@
-@extends('layouts.app')
+@extends('layouts.master')
 
-@section('content')
+@section('css')
+<link rel="stylesheet" href="css/login.css">
+@endsection
+
+@section('body')
 <div class="container">
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+    <div class="row panel-login">
+        <div class="col-md-5 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">Login</div>
+                <div class="panel-heading text-center">
+                    <h3 class="">
+                        Existing Customer
+                    </h3>
+                </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                         {{ csrf_field() }}
@@ -60,6 +68,18 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="panel panel-default">
+                <div class="panel-heading text-center">
+                    <h3 class="">
+                        New Customer
+                    </h3>
+                </div>
+                <div class="panel-body text-center">
+                    <a class="btn btn-primary" href="{{ route('register') }}">Register</a>
                 </div>
             </div>
         </div>
