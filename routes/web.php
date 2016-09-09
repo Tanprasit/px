@@ -20,10 +20,15 @@ Route::get('/', function () {
 });
 
 // Setup routes for login and registration
+
+// To display the forms
 Route::get('/sign-in', function () {
       return view('auth.login');
 })->name('login');
 
-Route::get('register', function () {
+Route::get('/register', function () {
       return view('auth.register');
 })->name('register');
+
+// Register controllers to models
+Route::resource('customers', 'CustomerController');
