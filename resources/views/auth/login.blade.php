@@ -79,7 +79,7 @@
                     </h3>
                 </div>
                 <div class="panel-body text-center">
-                    <a class="btn btn-primary" href="{{ route('register') }}">Register</a>
+                    <a class="btn btn-primary" href="{{ url('/register') }}">Register</a>
                 </div>
             </div>
         </div>

@@ -14,7 +14,25 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                   <ul class="nav navbar-nav navbar-right">
-                        <li><a href="{{ route('login') }}">SIGN IN</a></li>
+                        @if(Auth::check())
+                              <li>
+                                    <a class="text-uppercase" href="{{ route('dashboard') }}">
+                                          Hi, {{ Auth::user()->full_name }}
+                                    </a>
+                              </li>
+                              <li>
+                                    <a href="{{ url('/logout') }}" onclick="event.preventDefault();
+                                         document.getElementById('logout-form').submit();">LOG OUT
+                                   </a>
+                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                              </li>
+                        @else
+                              <li>
+                                    <a href="{{ url('/login') }}">SIGN IN</a>
+                              </li>
+                        @endif
                   </ul>
             </div><!-- /.navbar-collapse -->
       </div>
