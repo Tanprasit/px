@@ -6,11 +6,20 @@
 
 @section('body')
 <div class="container">
+    @if (count($errors) > 0)
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <div class="row panel-login">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
             <div class="panel-heading text-center">
-                <h3 class="">
+                <h3>
                     Register
                 </h3>
             </div>
@@ -22,7 +31,7 @@
                             <label for="name" class="col-md-4 control-label">Full Name</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+                                <input id="name" type="text" class="form-control" name="full_name" value="{{ old('full_name') }}" required autofocus>
 
                                 @if ($errors->has('name'))
                                     <span class="help-block">
@@ -46,7 +55,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('password') ? ' has-error' : ''}} password-form">
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
@@ -60,7 +69,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }} password-form">
                             <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
 
                             <div class="col-md-6">
@@ -79,7 +88,7 @@
                             <label for="contact-number" class="col-md-4 control-label">Contact Number</label>
 
                             <div class="col-md-6">
-                                <input id="contact-number" type="text" class="form-control" name="contact-number" required>
+                                <input id="contact-number" type="text" class="form-control" name="contact_number" value="{{ old('contact_number') }}" required>
 
                                 @if ($errors->has('contact-number'))
                                     <span class="help-block">
@@ -91,7 +100,7 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button id="submit-button" type="submit" class="btn btn-primary">
                                     Register
                                 </button>
                             </div>

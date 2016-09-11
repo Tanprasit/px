@@ -10,25 +10,28 @@
 | to using a Closure or controller method. Build something great!
 |
 */
+use Illuminate\Http\RedirectResponse;
 
-Route::get('/', function () {
-    return view('landing');
-});
-
-Route::get('/', function () {
-    return view('landing');
-});
-
+// Routes within this group will have access to sessions and  csrf protection.
 // Setup routes for login and registration
 
-// To display the forms
-Route::get('/sign-in', function () {
-      return view('auth.login');
-})->name('login');
+Route::group(['middleware' => ['web']], function () {      
+      Auth::routes();
 
-Route::get('/register', function () {
-      return view('auth.register');
-})->name('register');
+      Route::get('/', function () {
+            if (Auth::check()) {
+                  return Redirect::route('dashboard');
+            } else {
+                  return view('landing');
+            }
+      });
 
-// Register controllers to models
-Route::resource('customers', 'CustomerController');
+      Route::group(['middleware' => ['auth']], function () {
+            Route::get('/dashboard', function() {
+                  return view('dashboard');
+            })->name('dashboard');
+
+            // Register controllers to models
+            Route::resource('customers', 'CustomerController');
+      });
+});

@@ -23,5 +23,7 @@
       @include('widgets.navbar')
       
       @yield('body')
+      
+      @yield('script')
 </body>
 </html>

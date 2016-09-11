@@ -137,6 +137,7 @@ return [
 
     'providers' => [
 
+        'Clockwork\Support\Laravel\ClockworkServiceProvider',
         /*
          * Laravel Framework Service Providers...
          */
