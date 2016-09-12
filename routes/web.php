@@ -36,6 +36,11 @@ Route::group(['middleware' => ['web']], function () {
             Route::resource('orders', 'OrderController');
 
             // A route to display a list of outstanding orders
-            Route::get('customer/{id}/orders', 'CustomerController@getOutstandingOrders')->name('customers.orders');
+            Route::get('customer/{id}/orders', 'CustomerController@getOutstandingOrders')->name('customer.orders');
+
+            // A route for customer to add new cards
+            Route::post('customer/{id}/card/add', 'CustomerController@addNewCard')->name('customer.addcard'); 
+            // A route to delete a card
+            Route::delete('customer/{id}/card/delete', 'CustomerController@deleteCard')->name('customer.deletecard'); 
       });
 });

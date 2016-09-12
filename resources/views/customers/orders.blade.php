@@ -15,12 +15,12 @@
                                     </a>
                               </li>
                               <li class="active">
-                                    <a data-toggle="tooltip" data-placement="bottom" title="Review & modify your recent orders" href="{{ route('customers.orders', [Auth::user()->id]) }}">
+                                    <a data-toggle="tooltip" data-placement="bottom" title="Review & modify your recent orders" href="{{ route('customer.orders', [ Auth::user()->id ]) }}">
                                           Orders<span class="sr-only">(current)</span>
                                     </a>
                               </li>
                               <li>
-                                    <a data-toggle="tooltip" data-placement="bottom" title="Update your account settings" href="#">
+                                    <a data-toggle="tooltip" data-placement="bottom" title="Update your account settings" href="{{ route('customers.edit', [ Auth::user()->id ]) }}">
                                           Settings
                                     </a>
                               </li>

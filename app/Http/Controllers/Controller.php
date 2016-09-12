@@ -7,7 +7,14 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
+use Carbon\Carbon;
+
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
+    
+    // Return a carbon object
+    public function getCarbonTime($year, $month, $day) {
+        return Carbon::createFromDate($year, $month, $day, 'Europe/London');
+    }
 }

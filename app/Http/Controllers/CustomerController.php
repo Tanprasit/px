@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
 use Validator;
 
 use App\Http\Requests;
 use App\Customer;
+use App\Card;
 
 class CustomerController extends Controller
 {
@@ -159,5 +161,31 @@ class CustomerController extends Controller
         $customer = Customer::findOrFail($id);
         $orders = $customer->orders()->get();
         return view('customers.orders', compact('orders'));
+    }
+
+    public function addNewCard(Request $request, $id) {
+        $nameOnCard = $request->input('name_on_card');
+        $number = $request->input('number');
+        $expireMonth = $request->input('expiry_month');
+        $expireYear = $request->input('expiry_year');
+
+        $newCard = new Card();
+        $newCard->name_on_card = $nameOnCard;
+        $newCard->customer_id = $id;
+        $newCard->number = $number;
+        // Generate a card type ie. mastercard, visa using the number provided
+        $newCard->type = CardController::cardType($number);
+        $newCard->expires = $this->getCarbonTime($expireYear, $expireMonth, 1)->toDateTimeString();
+        $newCard->save();
+
+        return Redirect::back();
+    }
+
+    public function deleteCard(Request $request) {
+        $cardId = $request->input('card_id');
+        $card = Card::findOrFail($cardId);
+        $card->delete();
+
+        return Redirect::back();
     }
 }

@@ -19,9 +19,13 @@ class Customer extends Authenticatable
             'remember_token'
       ];
 
-      // Customer have many orders. 
-
+      // Customer has many orders. 
       public function orders() {
             return $this->belongsToMany('App\Order');
+      }
+
+      // Customer has many cards.
+      public function cards() {
+            return $this->hasMany('App\Card');
       }
 }

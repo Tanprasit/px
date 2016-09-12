@@ -15,7 +15,7 @@
                                     </a>
                               </li>
                               <li>
-                                    <a data-toggle="tooltip" data-placement="bottom" title="Review & modify your recent orders" href="{{ route('customers.orders', [ Auth::user()->id ]) }}">
+                                    <a data-toggle="tooltip" data-placement="bottom" title="Review & modify your recent orders" href="{{ route('customer.orders', [ Auth::user()->id ]) }}">
                                           Orders
                                     </a>
                               </li>
@@ -28,7 +28,7 @@
                   </div>
 
                   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                        <h1 class="page-header">Laudry</h1>
+                        <h1 class="page-header">Laundry Services</h1>
                         <div class="row">
                         </div>
                   </div>

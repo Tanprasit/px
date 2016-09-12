@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCardsTable extends Migration
+class CreatePaymentsTable extends Migration
 {
- /**
+    /**
      * Run the migrations.
      *
      * @return void
@@ -14,13 +14,11 @@ class CreateCardsTable extends Migration
     public function up()
     {
         //
-        Schema::create('cards', function (Blueprint $table) {
+        Schema::create('payments', function(Blueprint $table) {
             $table->increments('id');
-            $table->bigInteger('number');
             $table->integer('customer_id');
-            $table->string('name_on_card');
-            $table->string('type');
-            $table->timestamp('expires');
+            $table->integer('external_id');
+            $table->string('name');
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreateCardsTable extends Migration
     public function down()
     {
         //
-        Schema::drop('cards');
+        Schema::drop('payments');
     }
 }
