@@ -132,6 +132,9 @@
                                             Card Number
                                           </th>
                                           <th>
+                                            Name on Card
+                                          </th>
+                                          <th>
                                             Card Type
                                           </th>
                                           <th>
@@ -144,6 +147,7 @@
                                     @foreach($customer->cards()->get() as $card)
                                           <tr>
                                                 <td>{{ $card->getMaskedCardNumber() }}</td>
+                                                <td>{{ $card->name_on_card }}</td>
                                                 <td>{{ $card->type }}</td>
                                                 <td>{{ $card->getExpireDate() }}</td>
                                                 <!-- Delete button -->
