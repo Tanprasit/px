@@ -10,17 +10,17 @@
                   <div class="col-sm-3 col-md-2 sidebar">
                         <ul class="nav nav-sidebar">
                               <li class="active">
-                                    <a data-toggle="tooltip" data-placement="bottom" title="View available services" href="{{ route('dashboard') }}">
-                                          Services<span class="sr-only">(current)</span>
+                                    <a data-toggle="tooltip" data-placement="bottom" title="View available services" href="#">
+                                          Services
                                     </a>
                               </li>
                               <li>
-                                    <a data-toggle="tooltip" data-placement="bottom" title="Review & modify your recent orders" href="{{ route('customers.orders', [ Auth::user()->id ]) }}">
-                                          Orders
+                                    <a data-toggle="tooltip" data-placement="bottom" title="Review & modify your recent orders" href="#">
+                                          Orders<span class="sr-only">(current)</span>
                                     </a>
                               </li>
                               <li>
-                                    <a data-toggle="tooltip" data-placement="bottom" title="Update your account settings" href="{{ route('customers.edit', [ Auth::user()->id ]) }}">
+                                    <a data-toggle="tooltip" data-placement="bottom" title="Update your account settings" href="#">
                                           Settings
                                     </a>
                               </li>

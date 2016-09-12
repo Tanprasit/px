@@ -105,7 +105,7 @@ class CustomerController extends Controller
         // Get customer information to display it in a form
         $customer = Customer::findOrFail($id);
 
-        return view('customes.edit', compact('customer'));
+        return view('customers.edit', compact('customer'));
     }
 
     /**
@@ -152,5 +152,12 @@ class CustomerController extends Controller
 
         // Once deleted redirect to login page.
         return Redirect::route('login');
+    }
+
+    //  Get a list of outstanding orders belong to a user
+    public function getOutstandingOrders($id) {
+        $customer = Customer::findOrFail($id);
+        $orders = $customer->orders()->get();
+        return view('customers.orders', compact('orders'));
     }
 }

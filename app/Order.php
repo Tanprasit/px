@@ -16,7 +16,7 @@ class Order extends Model
       ];
 
       public function customer() {
-            return $this->belongsTo('App\Customer');
+            return $this->belongsToMany('App\Customer');
       }
 
       public function service() {

@@ -9,18 +9,18 @@
             <div class="row">
                   <div class="col-sm-3 col-md-2 sidebar">
                         <ul class="nav nav-sidebar">
-                              <li class="active">
+                              <li>
                                     <a data-toggle="tooltip" data-placement="bottom" title="View available services" href="{{ route('dashboard') }}">
-                                          Services<span class="sr-only">(current)</span>
+                                          Services
+                                    </a>
+                              </li>
+                              <li class="active">
+                                    <a data-toggle="tooltip" data-placement="bottom" title="Review & modify your recent orders" href="{{ route('customers.orders', [Auth::user()->id]) }}">
+                                          Orders<span class="sr-only">(current)</span>
                                     </a>
                               </li>
                               <li>
-                                    <a data-toggle="tooltip" data-placement="bottom" title="Review & modify your recent orders" href="{{ route('customers.orders', [ Auth::user()->id ]) }}">
-                                          Orders
-                                    </a>
-                              </li>
-                              <li>
-                                    <a data-toggle="tooltip" data-placement="bottom" title="Update your account settings" href="{{ route('customers.edit', [ Auth::user()->id ]) }}">
+                                    <a data-toggle="tooltip" data-placement="bottom" title="Update your account settings" href="#">
                                           Settings
                                     </a>
                               </li>
@@ -28,7 +28,7 @@
                   </div>
 
                   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                        <h1 class="page-header">Outstanding Orders</h1>
+                        <h1 class="page-header"> Laundry</h1>
                         <div class="row">
                         </div>
                   </div>

@@ -16,13 +16,13 @@
                   <ul class="nav navbar-nav navbar-right">
                         @if(Auth::check())
                               <li>
-                                    <a class="text-uppercase" href="{{ route('dashboard') }}">
-                                          Hi, {{ Auth::user()->full_name }}
+                                    <a href="{{ route('dashboard') }}">
+                                          Welcome, {{ Auth::user()->full_name }}
                                     </a>
                               </li>
                               <li>
                                     <a href="{{ url('/logout') }}" onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">LOG OUT
+                                         document.getElementById('logout-form').submit();">Log out
                                    </a>
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                         {{ csrf_field() }}

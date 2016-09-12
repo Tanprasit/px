@@ -22,6 +22,6 @@ class Customer extends Authenticatable
       // Customer have many orders. 
 
       public function orders() {
-            return $this->hasMany('App\Orders');
+            return $this->belongsToMany('App\Order');
       }
 }
