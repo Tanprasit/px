@@ -31,8 +31,12 @@ Route::group(['middleware' => ['web']], function () {
                   return view('dashboard');
             })->name('dashboard');
 
+            // Prevent users from modifying resources of other users.
+            Route::group(['middleware' => ['account.owner']], function () {
+                  Route::resource('customers', 'CustomerController');
+            });
+
             // Register controllers to models
-            Route::resource('customers', 'CustomerController');
             Route::resource('orders', 'OrderController');
 
             // A route to display a list of outstanding orders
