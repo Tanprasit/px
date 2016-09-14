@@ -43,8 +43,10 @@ Route::group(['middleware' => ['web']], function () {
 
             // A route for customer to add new order to their cart
             Route::post('customers/{customer}/cart/add/order/{order}', 'CustomerController@addToCart')->name('customer.addtocart');
-
-                 // A route for customer to remove an order from their cart
+           // A route for customer to remove an order from their cart
             Route::post('customers/{customer}/cart/remove/order/{order}', 'CustomerController@removeFromCart')->name('customer.removefromcart');
+
+            // A route for customer to make an address a primary
+            Route::post('customer/{customer}/address/{address}/make/primary', 'CustomerController@makePrimary')->name('address.makeprimary');
       });
 });

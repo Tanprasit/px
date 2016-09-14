@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redirect;
 
 use App\Http\Requests;
 use App\Address;
+use Auth;
 
 class AddressController extends Controller
 {
@@ -41,17 +42,18 @@ class AddressController extends Controller
     {
         // Check if this is the user's first address if so set it
         // as primary address.
-        $primary = (!count(Auth::user()->addresses()))
+        $primary = (!count(Auth::user()->addresses()->get()))
                         ? true 
                         : false;
 
         $address = new Address();
+        $address->customer_id = Auth::user()->id;
         $address->address_line_1 = $request->input('address_line_1');
         $address->address_line_2 = $request->input('address_line_2');
         $address->town_city = $request->input('town_city');
         $address->postcode = $request->input('postcode');
         $address->county = $request->input('county');
-        $Address->primary = $primary;
+        $address->primary = $primary;
 
         $address->save();
 
@@ -103,5 +105,11 @@ class AddressController extends Controller
     public function destroy($id)
     {
         //
+        $address = Address::findOrFail($id);
+        $addressLine = $address->address_line_1;
+        $address->delete();
+
+        return Redirect::back()
+            ->with('message', 'Successfully removed '. $addressLine .' address from account!');
     }
 }

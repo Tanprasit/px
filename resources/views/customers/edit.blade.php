@@ -205,13 +205,11 @@
                                                 <td>{{ $address->primary }}</td>
                                                 <!-- Delete button -->
                                                 <td>
-                                                  <form method="POST" action="{{ route('customer.deletecard', [Auth::user()->id]) }}">
+                                                  <form class="form-horizontal" method="POST" action="{{ route('addresses.destroy', [$address->id]) }}">
                                                       {{ method_field('DELETE') }}
                                                       <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                      <input type="hidden" name="card_id" value={{ $address->id }}>
-                                                      <button class="btn btn-danger" type="submit">Delete</button>
+                                                      <button class="btn btn-danger center-block" type="submit">Delete</button>
                                                   </form>
-                                                  <a href="{{ route('address.makeprimary', [$address->id]) }}">Make Primary</a>
                                                 </td>
                                           </tr>
                                     @endforeach

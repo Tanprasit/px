@@ -7,7 +7,7 @@
                   </div>
                   <!-- Modal Body -->
                   <div class="modal-body">
-                        <form action="{{ route('addresses.create') }}" method="POST" class="form-horizontal" id="add-address-form" role="form">
+                        <form action="{{ route('addresses.store') }}" method="POST" class="form-horizontal" id="add-address-form" role="form">
                               {{ csrf_field() }}
                               <div class="form-group">
                                     <label class="col-md-4 control-label" for="number">Address Line 1</label>
