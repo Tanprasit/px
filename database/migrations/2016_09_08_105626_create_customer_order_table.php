@@ -19,7 +19,7 @@ class CreateCustomerOrderTable extends Migration
             $table->integer('customer_id');
             $table->integer('order_id');
             $table->integer('quantity');
-            $table->float('discount_amount');
+            $table->decimal('discount_amount', 8, 2);
             $table->timestamp('order_date');
             $table->timestamp('delivery_date')->nullable();
             $table->boolean('completed')->default(false);

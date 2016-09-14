@@ -21,7 +21,9 @@ class Customer extends Authenticatable
 
       // Customer has many orders. 
       public function orders() {
-            return $this->belongsToMany('App\Order');
+            return $this->belongsToMany('App\Order')
+                  ->withPivot('quantity', 'discount_amount', 'order_date', 'delivery_date', 'completed')
+                  ->withTimestamps();
       }
 
       // Customer has many cards.

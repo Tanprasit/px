@@ -8,8 +8,9 @@ class Order extends Model
 {
     //
       protected $fillable = [
-            'placed_at',
-            'deadline_at',
+            'name',
+            'price',
+            'description',
       ];
 
       protected $hidden = [
@@ -17,13 +18,5 @@ class Order extends Model
 
       public function customer() {
             return $this->belongsToMany('App\Customer');
-      }
-
-      public function service() {
-            return $this->belongsTo('App\Service');
-      }
-
-      public function Employee() {
-            return $this->belongsTo('App\Employee');
       }
 }
