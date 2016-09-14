@@ -12,7 +12,8 @@ class Card extends Model
             'number',
             'name_on_card',
             'type',
-            'expires'
+            'expires',
+            'primary',
       ];
 
       // Hide the card number from all arrays and jsons.

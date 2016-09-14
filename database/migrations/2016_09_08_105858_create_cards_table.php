@@ -21,6 +21,7 @@ class CreateCardsTable extends Migration
             $table->string('name_on_card');
             $table->string('type');
             $table->timestamp('expires');
+            $table->boolean('primary');
             $table->timestamps();
         });
     }

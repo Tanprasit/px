@@ -11,6 +11,7 @@ use App\Http\Requests;
 use App\Customer;
 use App\Card;
 use App\Order;
+use Auth;
 
 class CustomerController extends Controller
 {   
@@ -129,8 +130,8 @@ class CustomerController extends Controller
     {
         $this->validate($request,[
             'full_name' => 'required',
-            'email' => 'required|unique:user',
-            'password' => 'required',
+            'email' => 'required|unique:customers,email,' . $id,
+            'password' => '',
             'contact_number' => 'required'
         ]);
 
@@ -139,12 +140,13 @@ class CustomerController extends Controller
         $customer->full_name = $request->input('full_name');
         $customer->password = bcrypt($request->input('password'));
         $customer->email = $request->input('email');
-        $customer->contact_number = $request->input('contact_nummber');
+        $customer->contact_number = $request->input('contact_number');
 
         $customer->save();
 
         // Once updated redirect the user to their profile page.
-        return Redirect::route('customers.show', [$customer->id]);
+        return Redirect::route('customers.edit', [$customer->id])
+            ->with('message', 'Your account information was updated!');
     }
 
     /**
@@ -177,6 +179,12 @@ class CustomerController extends Controller
         $expireMonth = $request->input('expiry_month');
         $expireYear = $request->input('expiry_year');
 
+        // Check if this is the user's first address if so set it
+        // as primary address.
+        $primary = (!count(Auth::user()->cards()->get()))
+                        ? true 
+                        : false;
+
         $newCard = new Card();
         $newCard->name_on_card = $nameOnCard;
         $newCard->customer_id = $id;
@@ -184,6 +192,7 @@ class CustomerController extends Controller
         // Generate a card type ie. mastercard, visa using the number provided
         $newCard->type = CardController::cardType($number);
         $newCard->expires = $this->getCarbonTime($expireYear, $expireMonth, 1)->toDateTimeString();
+        $newCard->primary = $primary;
         $newCard->save();
 
         return Redirect::back();

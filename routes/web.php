@@ -31,6 +31,7 @@ Route::group(['middleware' => ['web']], function () {
             // Register controllers to models.
             Route::resource('customers', 'CustomerController');
             Route::resource('orders', 'OrderController');
+            Route::resource('addresses', 'AddressController');
 
             // A route to display a list of outstanding orders
             Route::get('customers/{customer}/orders', 'CustomerController@getOutstandingOrders')->name('customer.orders');

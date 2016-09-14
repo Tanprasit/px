@@ -26,7 +26,8 @@
                               </li>
                         </ul>
                   </div>
-
+                  
+                  <!-- Table that breaks down the order -->
                   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                         <h1 class="page-header">Checkout</h1>
                         <table class="table table-hover">
@@ -49,7 +50,19 @@
                                     @endforeach
                               </tbody>
                         </table>
+                        <div class="row">
+                              <!-- Pick-up/ Drop-off address selection -->
+                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                                    <h3 class="sub-header">Primary Address</h3>
+                              </div>
+
+                              <!-- Card information -->
+                              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    
+                              </div>
+                        </div>
                   </div>
+
             </div>
       </div>
 @endsection

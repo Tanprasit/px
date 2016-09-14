@@ -29,10 +29,16 @@
                   </div>
 
                   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                        <h1 class="page-header">Your Details</h1>
+                        @if(\Session::has('message'))
+                              <div class="alert alert-success">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <p>{!! \Session::get('message') !!}</p>
+                              </div>
+                        @endif
+                        <h1 class="page-header">Your Details <a class="btn btn-primary pull-right" onclick="document.getElementById('customer-form').submit()">Update</a></h1>
                         <div class="row">
                               <!-- Form to update the user's details -->
-                              <form class="form-horizontal" action="{{ route('customers.update', [ Auth::user()->id ]) }}" method="POST" role="form">
+                              <form id="customer-form" class="form-horizontal" action="{{ route('customers.update', [ Auth::user()->id ]) }}" method="POST" role="form">
                                 {{ csrf_field() }}
                                 <!-- Needed direct to the correct route and controller -->
                                 {{ method_field('PUT') }}
@@ -106,18 +112,10 @@
                                         @endif
                                     </div>
                                 </div>
-
-                                <div class="form-group">
-                                    <div class="col-md-6 col-md-offset-4">
-                                        <button id="submit-button" type="submit" class="btn btn-primary">
-                                            Update
-                                        </button>
-                                    </div>
-                                </div>
                               </form>
                         </div>
                         <br>
-
+                        <br>
                         <!-- Table display all cards linked with current user -->
                         <h2 class="sub-header">
                               Payment Details           
@@ -140,6 +138,9 @@
                                           <th>
                                             Expire Date
                                           </th>
+                                          <th>
+                                            Primary
+                                          </th>
                                           <th></th>
                                     </tr>
                               </thead>
@@ -150,6 +151,7 @@
                                                 <td>{{ $card->name_on_card }}</td>
                                                 <td>{{ $card->type }}</td>
                                                 <td>{{ $card->getExpireDate() }}</td>
+                                                <td>{{ $card->primary }}</td>
                                                 <!-- Delete button -->
                                                 <td>
                                                   <form method="POST" action="{{ route('customer.deletecard', [Auth::user()->id]) }}">
@@ -163,8 +165,62 @@
                                     @endforeach
                               </tbody>
                         </table>
+                        <br>
+                        <br>
+                        <!-- Table to display all address associated with current user -->
+                        <h2 class="sub-header">
+                              Addresses           
+                              <btn class="btn btn-primary pull-right" data-toggle="modal" data-target="#add-address">
+                                    Add Address
+                              </btn>
+                        </h2>
+                        <table id="addresses-table" class="display" cellspacing="0" width="100%">
+                              <thead>
+                                    <tr>
+                                          <th>
+                                            Address Line 1
+                                          </th>
+                                          <th>
+                                            Address Line 2
+                                          </th>
+                                          <th>
+                                            Town/ City
+                                          </th>
+                                          <th>
+                                            Postcode
+                                          </th>
+                                          <th>
+                                            Primary
+                                          </th>
+                                          <th></th>
+                                    </tr>
+                              </thead>
+                              <tbody>
+                                    @foreach($customer->addresses()->get() as $address)
+                                          <tr>
+                                                <td>{{ $address->address_line_1 }}</td>
+                                                <td>{{ $address->address_line_2 }}</td>
+                                                <td>{{ $address->town_city }}</td>
+                                                <td>{{ $address->postcode }}</td>
+                                                <td>{{ $address->primary }}</td>
+                                                <!-- Delete button -->
+                                                <td>
+                                                  <form method="POST" action="{{ route('customer.deletecard', [Auth::user()->id]) }}">
+                                                      {{ method_field('DELETE') }}
+                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                      <input type="hidden" name="card_id" value={{ $address->id }}>
+                                                      <button class="btn btn-danger" type="submit">Delete</button>
+                                                  </form>
+                                                  <a href="{{ route('address.makeprimary', [$address->id]) }}">Make Primary</a>
+                                                </td>
+                                          </tr>
+                                    @endforeach
+                              </tbody>
+                        </table>
                   </div>
+
                   @include('widgets.modal.addcard')
+                  @include('widgets.modal.addaddress')
             </div>
       </div>
 @endsection
@@ -175,7 +231,7 @@
         $(function () {
           
           $('[data-toggle="tooltip"]').tooltip();
-          $('#payment-table').DataTable({
+        $('#payment-table, #addresses-table').DataTable({
             "scrollX": true
           });
         });

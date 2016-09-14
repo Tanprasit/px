@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Address;
 
 class Customer extends Authenticatable
 {
@@ -29,5 +30,10 @@ class Customer extends Authenticatable
       // Customer has many cards.
       public function cards() {
             return $this->hasMany('App\Card');
+      }
+
+      // A customer can have many addresses.
+      public function addresses() {
+            return $this->hasMany('App\Address');
       }
 }

@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 use App\Http\Requests;
-use App\Order;
+use App\Address;
 
-class OrderController extends Controller
+class AddressController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        // Grab all orders
-        $orders = Order::all();
-
-        return view('orders.index', compact('orders'));
+        //
     }
 
     /**
@@ -28,28 +25,10 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create()
     {
         //
-        $productIds = $request->session()->get('cart');
-
-        if (count($productIds)> 0) {
-            $orders = [];
-            $quantity = [];
-            $totals = [];
-
-            foreach ($productIds as $productId => $quantity) {
-                $order = Order::findOrFail($productId);
-                $orders[] = $order;
-                $quantities[] = $quantity;
-                $totals[] = money_format("%i", $order->price * $quantity);
-            }
-
-            return view('orders.create', compact('orders', 'quantities', 'totals'));
-        } else {
-            return Redirect::back()
-                ->with('message', 'Your cart is empty!');   
-        }
+        return view('addresses.create');
     }
 
     /**
@@ -60,7 +39,24 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Check if this is the user's first address if so set it
+        // as primary address.
+        $primary = (!count(Auth::user()->addresses()))
+                        ? true 
+                        : false;
+
+        $address = new Address();
+        $address->address_line_1 = $request->input('address_line_1');
+        $address->address_line_2 = $request->input('address_line_2');
+        $address->town_city = $request->input('town_city');
+        $address->postcode = $request->input('postcode');
+        $address->county = $request->input('county');
+        $Address->primary = $primary;
+
+        $address->save();
+
+        return Redirect::back()
+            ->with('message', 'Successfully added ' . $address->address_line_1);
     }
 
     /**
@@ -72,6 +68,7 @@ class OrderController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
