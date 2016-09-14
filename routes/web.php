@@ -20,27 +20,24 @@ Route::group(['middleware' => ['web']], function () {
 
       Route::get('/', function () {
             if (Auth::check()) {
-                  return Redirect::route('dashboard');
+                  return Redirect::route('orders.index');
             } else {
                   return view('landing');
             }
       });
 
       Route::group(['middleware' => ['auth']], function () {
-            Route::get('/dashboard', function() {
-                  return view('dashboard');
-            })->name('dashboard');
 
-            // Register controllers to models
+            // Register controllers to models.
             Route::resource('customers', 'CustomerController');
             Route::resource('orders', 'OrderController');
 
-            // A route to display a list of outstanding orders
+            // A route to display a list of outstanding orders.
             Route::get('customer/{id}/orders', 'CustomerController@getOutstandingOrders')->name('customer.orders');
 
-            // A route for customer to add new cards
+            // A route for customer to add new cards.
             Route::post('customer/{id}/card/add', 'CustomerController@addNewCard')->name('customer.addcard'); 
-            // A route to delete a card
+            // A route to delete a card.
             Route::delete('customer/{id}/card/delete', 'CustomerController@deleteCard')->name('customer.deletecard'); 
       });
 });

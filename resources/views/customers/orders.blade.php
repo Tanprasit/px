@@ -10,7 +10,7 @@
                   <div class="col-sm-3 col-md-2 sidebar">
                         <ul class="nav nav-sidebar">
                               <li>
-                                    <a data-toggle="tooltip" data-placement="bottom" title="View available services" href="{{ route('dashboard') }}">
+                                    <a data-toggle="tooltip" data-placement="bottom" title="View available services" href="{{ route('orders.index') }}">
                                           Services
                                     </a>
                               </li>

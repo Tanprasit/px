@@ -28,8 +28,20 @@
                   </div>
 
                   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                        <h1 class="page-header">Laundry Services</h1>
+                        <h1 class="page-header">Ironing Service <a class="btn btn-primary pull-right" href="#">Continue</a></h1>
                         <div class="row">
+                              <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                                    <div class="thumbnail">
+                                          <div class="caption text-center">
+                                                @foreach($orders as $order)
+                                                <h3 class="text-uppercase">{{ $order->name }}</h3>
+                                                <hr>
+                                                <p>{{ $order->price }}</p>
+                                                <hr>
+                                                <input class="form-control" type="text" value="0">
+                                          </div>
+                                    </div>
+                              </div>
                         </div>
                   </div>
             </div>

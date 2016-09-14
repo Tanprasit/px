@@ -11,7 +11,7 @@
                   <div class="col-sm-3 col-md-2 sidebar">
                         <ul class="nav nav-sidebar">
                               <li>
-                                    <a data-toggle="tooltip" data-placement="bottom" title="View available services" href="{{ route('dashboard') }}">
+                                    <a data-toggle="tooltip" data-placement="bottom" title="View available services" href="{{ route('orders.index') }}">
                                           Services
                                     </a>
                               </li>
@@ -120,7 +120,7 @@
 
                         <!-- Table display all cards linked with current user -->
                         <h2 class="sub-header">
-                              My Payment Details           
+                              Payment Details           
                               <btn class="btn btn-primary pull-right" data-toggle="modal" data-target="#addCard">
                                     Add Card
                               </btn>
