@@ -12,7 +12,14 @@ use App\Customer;
 use App\Card;
 
 class CustomerController extends Controller
-{
+{   
+
+    public function __construct() {
+
+        // Prevent users from modifying resources of other users.
+        $this->middleware('account.owner',
+            [ 'only' => [ 'edit', 'update', 'customer.addcard', 'customer.addcard' ] ]);
+    }
     /**
      * Display a listing of the resource.
      *

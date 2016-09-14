@@ -31,20 +31,16 @@ Route::group(['middleware' => ['web']], function () {
                   return view('dashboard');
             })->name('dashboard');
 
-            // Prevent users from modifying resources of other users.
-            Route::group(['middleware' => ['account.owner']], function () {
-                  Route::resource('customers', 'CustomerController');
-            });
-
             // Register controllers to models
+            Route::resource('customers', 'CustomerController');
             Route::resource('orders', 'OrderController');
 
             // A route to display a list of outstanding orders
-            Route::get('customer/{id}/orders', 'CustomerController@getOutstandingOrders')->name('customer.orders');
+            Route::get('customers/{customer}/orders', 'CustomerController@getOutstandingOrders')->name('customer.orders');
 
             // A route for customer to add new cards
-            Route::post('customer/{id}/card/add', 'CustomerController@addNewCard')->name('customer.addcard'); 
+            Route::post('customers/{customer}/card/add', 'CustomerController@addNewCard')->name('customer.addcard'); 
             // A route to delete a card
-            Route::delete('customer/{id}/card/delete', 'CustomerController@deleteCard')->name('customer.deletecard'); 
+            Route::delete('customers/{customer}/card/delete', 'CustomerController@deleteCard')->name('customer.deletecard'); 
       });
 });
