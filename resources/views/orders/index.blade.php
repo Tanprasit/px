@@ -28,28 +28,38 @@
                   </div>
 
                   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                        <h1 class="page-header">Ironing Service <a class="btn btn-primary pull-right" data-toggle="modal" href="#checkout">Continue</a></h1>
+                        @if(\Session::has('message'))
+                              <div class="alert alert-success">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <p>{!! \Session::get('message') !!}</p>
+                              </div>
+                        @endif
+                        <h1 class="page-header">Ironing Service <a class="btn btn-primary pull-right" href="{{ route('orders.create') }}">Checkout</a></h1>
                         <div class="row">
                               @foreach($orders as $order)
-                                    <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
-                                          <div class="thumbnail">
-                                                <div class="caption text-center">
-                                                      <h3>{{ $order->name }}</h3>
-                                                      <hr>
-                                                      <h4>£{{ $order->price }}</h4>
-                                                      <hr>
-                                                      <input name="quantity" class="form-control" type="number" value="0">
-                                                      <input type="hidden" name="name" value="{{ $order->name }}">
-                                                      <input type="hidden" name="price" value="{{ $order->price }}">
+                                    <form method="POST" action="{{ route('customer.addtocart', [Auth::user()->id, $order->id]) }}">
+                                          {{ csrf_field() }}
+                                          <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3">
+                                                <div class="thumbnail">
+                                                      <div class="caption text-center">
+                                                            <h3>{{ $order->name }}</h3>
+                                                            <small>{{ $order->description }}</small>
+                                                            <hr>
+                                                            <h4>£{{ $order->price }}</h4>
+                                                            <hr>
+                                                            <input name="quantity" class="form-control text-center" type="number" value="0">
+                                                            <input name="name" type="hidden" value="{{ $order->name  }}">
+                                                            <hr>
+                                                            <input class="btn btn-primary form-control" type="submit" value="Add">
+                                                      </div>
                                                 </div>
                                           </div>
-                                    </div>
+                                    </form>
                               @endforeach
                         </div>
                   </div>
             </div>
       </div>
-      @include('widgets.modal.checkout')
 @endsection
 
 @section('script')
@@ -57,24 +67,5 @@
             $(function () {
               $('[data-toggle="tooltip"]').tooltip()
             })
-      </script>
-      <!-- Script to grab all the user inputs in the fields and calculate the total cost -->
-      <!-- ITEM QUANTITY PRICE -->
-      <script type="text/javascript">
-            function getNameArray() {
-                  
-            }
-
-            function getQuantityArray() {
-
-            }
-
-            function getPriceArray() {
-
-            }
-            
-            var nameArray = getNameArray();
-            var quantityArray = getQuantityArray();
-            var priceArray = getPriceArray();
       </script>
 @endsection

@@ -17,12 +17,20 @@
                         @if(Auth::check())
                               <li>
                                     <a href="{{ route('orders.index') }}">
-                                          Welcome, {{ Auth::user()->full_name }}
+                                          <span class="glyphicon glyphicon-user"></span> {{ Auth::user()->full_name }}
+                                    </a>
+                              </li>
+                              <li>
+                                    <a href="{{ route('orders.create') }}">
+                                          <span class="glyphicon glyphicon glyphicon-shopping-cart"></span> Cart 
+                                          @if(count(\Session::get('cart')) > 0)
+                                                <span class="badge">{{ count(\Session::get('cart')) }}</span>
+                                          @endif
                                     </a>
                               </li>
                               <li>
                                     <a href="{{ url('/logout') }}" onclick="event.preventDefault();
-                                         document.getElementById('logout-form').submit();">Log out
+                                         document.getElementById('logout-form').submit();"><span class="glyphicon glyphicon-log-out"></span> Log out
                                    </a>
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
                                         {{ csrf_field() }}

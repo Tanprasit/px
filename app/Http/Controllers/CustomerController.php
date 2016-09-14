@@ -10,6 +10,7 @@ use Validator;
 use App\Http\Requests;
 use App\Customer;
 use App\Card;
+use App\Order;
 
 class CustomerController extends Controller
 {   
@@ -39,7 +40,7 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
+    {   
         // Show a form to register a new customer
         return view('customers.create');
     }
@@ -194,5 +195,38 @@ class CustomerController extends Controller
         $card->delete();
 
         return Redirect::back();
+    }
+
+
+    // Calculate the total cost with discount and display it as a checkout page
+    public function addToCart(Request $request, Customer $customer, Order $order) {
+        // Grab item information from form.
+        $quantity = $request->input('quantity');
+        $name = $request->input('name');
+
+        // Check if the cart exists in the session, if so grab it
+        // otherwise create a new array to store the products.
+        $products = ($request->session()->has('cart'))
+            ? $request->session()->get('cart')
+            : [] ;
+
+        $products[$order->id] = $quantity;
+
+        // Store the products in the session
+        $request->session()->put('cart', $products);
+
+        $response = ($quantity > 1)
+            ? $quantity . ' ' . $name . ' items were added to the cart.'
+            : $quantity . ' ' . $name . ' item was added to the card.';
+
+        // Add item to session basket
+        return Redirect::back()
+            ->with('message', $response);
+    }
+
+    public function removeFromCart(Request $request, Customer $customer, Order $order) {
+        // Grab item information from form.
+
+        // Add item to session basket
     }
 }

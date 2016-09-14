@@ -27,9 +27,22 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $productIds = $request->session()->get('cart');
+        $orders = [];
+        $quantity = [];
+        $totals = [];
+
+        foreach ($productIds as $productId => $quantity) {
+            $order = Order::findOrFail($productId);
+            $orders[] = $order;
+            $quantities[] = $quantity;
+            $totals[] = $order->price * $quantity;
+        }
+
+        return view('orders.create', compact('orders', 'quantities', 'totals'));
     }
 
     /**

@@ -15,8 +15,8 @@
             </ul>
         </div>
     @endif
-    <div class="row panel-login">
-        <div class="col-md-8 col-md-offset-2">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2 panel-login">
             <div class="panel panel-default">
             <div class="panel-heading text-center">
                 <h3>
