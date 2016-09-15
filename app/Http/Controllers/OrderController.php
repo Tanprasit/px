@@ -19,7 +19,6 @@ class OrderController extends Controller
     {
         // Grab all orders
         $orders = Order::all();
-
         return view('orders.index', compact('orders'));
     }
 
@@ -36,16 +35,24 @@ class OrderController extends Controller
         if (count($productIds)> 0) {
             $orders = [];
             $quantity = [];
-            $totals = [];
+            $subTotal = [];
 
             foreach ($productIds as $productId => $quantity) {
                 $order = Order::findOrFail($productId);
                 $orders[] = $order;
                 $quantities[] = $quantity;
-                $totals[] = money_format("%i", $order->price * $quantity);
+                $subTotal[] = money_format("%i", $order->price * $quantity);
             }
 
-            return view('orders.create', compact('orders', 'quantities', 'totals'));
+            $orderTotal = 0;
+
+            foreach ($subTotal as $cost) {
+                $orderTotal += $cost;
+            }
+
+            $orderTotal = money_format("%i", $orderTotal);
+
+            return view('orders.create', compact('orders', 'quantities', 'subTotal', 'orderTotal'));
         } else {
             return Redirect::route('orders.index')
                 ->with('message', 'Your cart is empty! Please make an order.');   

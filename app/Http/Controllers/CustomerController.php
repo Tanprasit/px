@@ -11,6 +11,8 @@ use App\Http\Requests;
 use App\Customer;
 use App\Card;
 use App\Order;
+use App\Address;
+
 use Auth;
 use Carbon\Carbon;
 
@@ -211,8 +213,8 @@ class CustomerController extends Controller
 
 
     // Calculate the total cost with discount and display it as a checkout page
-    public function addToCart(Request $request, Customer $customer, Order $order) {
-        // Grab item information from form.
+    public function addToCart(Request $request, Customer $customer, $orderId) {
+        // Grab item information from cart.
         $quantity = $request->input('quantity');
         $name = $request->input('name');
 
@@ -222,9 +224,8 @@ class CustomerController extends Controller
             ? $request->session()->get('cart')
             : [] ;
 
-        $products[$order->id] = $quantity;
-
         // Store the products in the session
+        $products[$orderId] = $quantity;
         $request->session()->put('cart', $products);
 
         $response = ($quantity > 1)
@@ -236,10 +237,38 @@ class CustomerController extends Controller
             ->with('message', $response);
     }
 
-    public function removeFromCart(Request $request, Customer $customer, Order $order) {
+    public function removeFromCart(Request $request, $customerId, $orderId) {
+        // Grab item information from cart.
+        $products = $request->session()->get('cart');
+
+        // remove item from cart.
+        unset($products[$orderId]);
+        $request->session()->put('cart', $products);
+
+        // Check if th cart is now empty if so direct the user back to the orders page
+        // With a message informing them that the cart is empty.
+        if (!$products) {
+            return Redirect::route('orders.index')
+                ->with('message', 'The cart is now empty!');
+        } else {
+            // Store the updated in the session
+            return Redirect::back()
+                ->with('message', 'An item was removed from your cart!');;
+        }
+    }
+
+    public function editFromCart(Request $request, $customerId, $orderId) {
         // Grab item information from form.
+        $products = $request->session()->get('cart');
+        $quantity = $request->input('quantity');
+
+        $products[$orderId] = $quantity;
+
+        // Store the products in the session
+        $request->session()->put('cart', $products);
 
         // Add item to session basket
+        return Redirect::back();
     }
 
     // Make orders using the session and proceed with stripe
@@ -282,5 +311,42 @@ class CustomerController extends Controller
         // Make a customer order and save it to the database
         return Redirect::route('customer.orders', [Auth::user()->id])
             ->with('message', 'Success, thank you for make an order!');
+    }
+
+    public function makePrimaryAddress(Request $request, $customerId, $primarAddressId) {
+        // Get current primary address
+        $customer = Customer::findOrFail($customerId);
+        $primaryAddress = $customer->getPrimaryAddress();
+        // Make it no longer the primary address
+        $primaryAddress->primary = false;
+        $primaryAddress->save();
+        // Get the address that we want to make primary
+        // Set it to primary
+        $newPrimaryAddress = Address::findOrFail($primarAddressId);
+        $newPrimaryAddress->primary = true;
+        $addressLineOne = $newPrimaryAddress->address_line_1;
+        $newPrimaryAddress->save();
+
+        return Redirect::back()
+            ->with('message', $addressLineOne . ' is now your primary address!');
+    }
+
+    public function makePrimaryCard(Request $request, $customerId, $primaryCardId) {
+        // Get current primary card
+        $customer = Customer::findOrFail($customerId);
+        // Make it no longer the primary card
+        $primaryCard = $customer->getPrimaryCard();
+        $primaryCard->primary = false;
+        $primaryCard->save();
+
+        // Get the card that we want to make primary
+        // Set it to primary
+        $newPrimaryCard = Card::findOrFail($primaryCardId);
+        $newPrimaryCard->primary = true;
+        $lastDigits = $newPrimaryCard->getLastDigits();
+        $newPrimaryCard->save();
+
+        return Redirect::back()
+            ->with('message', 'Card ending in ' . $lastDigits . ' is now your primary card!');
     }
 }

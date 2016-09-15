@@ -47,7 +47,7 @@
                                                             <hr>
                                                             <h4>£{{ $order->price }}</h4>
                                                             <hr>
-                                                            <input name="quantity" class="form-control text-center" type="number" value="0">
+                                                            <input name="quantity" class="form-control text-center" type="number" value="1" min="1">
                                                             <input name="name" type="hidden" value="{{ $order->name  }}">
                                                             <hr>
                                                             <input class="btn btn-primary form-control" type="submit" value="Add">

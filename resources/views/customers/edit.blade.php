@@ -139,9 +139,8 @@
                                             Expire Date
                                           </th>
                                           <th>
-                                            Primary
+                                            Options
                                           </th>
-                                          <th></th>
                                     </tr>
                               </thead>
                               <tbody>
@@ -151,15 +150,25 @@
                                                 <td>{{ $card->name_on_card }}</td>
                                                 <td>{{ $card->type }}</td>
                                                 <td>{{ $card->getExpireDate() }}</td>
-                                                <td>{{ $card->primary }}</td>
                                                 <!-- Delete button -->
                                                 <td>
-                                                  <form method="POST" action="{{ route('customer.deletecard', [Auth::user()->id]) }}">
-                                                      {{ method_field('DELETE') }}
-                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                      <input type="hidden" name="card_id" value={{ $card->id }}>
-                                                      <button class="btn btn-danger" type="submit">Delete</button>
-                                                  </form>
+                                                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    @if(!$card->primary)
+                                                      <form method="POST" action="{{ route('card.makeprimary', [Auth::user()->id, $card->id]) }}">
+                                                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                          <button class="btn btn-warning block-center" type="submit">Primary</button>
+                                                      </form>                                                  
+                                                    @endif
+                                                  </div>
+                                                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                  <!-- Form to disassociate the card from customer -->
+                                                    <form method="POST" action="{{ route('customer.deletecard', [Auth::user()->id]) }}">
+                                                        {{ method_field('DELETE') }}
+                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                        <input type="hidden" name="card_id" value={{ $card->id }}>
+                                                        <button class="btn btn-danger block-center" type="submit">Delete</button>
+                                                    </form>
+                                                  </div>
                                                 </td>
                                           </tr>
                                     @endforeach
@@ -169,7 +178,7 @@
                         <br>
                         <!-- Table to display all address associated with current user -->
                         <h2 class="sub-header">
-                              My Addresses           
+                              My Addresses
                               <btn class="btn btn-primary pull-right" data-toggle="modal" data-target="#add-address">
                                     Add Address
                               </btn>
@@ -190,9 +199,8 @@
                                             Postcode
                                           </th>
                                           <th>
-                                            Primary
+                                            Options
                                           </th>
-                                          <th></th>
                                     </tr>
                               </thead>
                               <tbody>
@@ -202,14 +210,23 @@
                                                 <td>{{ $address->address_line_2 }}</td>
                                                 <td>{{ $address->town_city }}</td>
                                                 <td>{{ $address->postcode }}</td>
-                                                <td>{{ $address->primary }}</td>
                                                 <!-- Delete button -->
                                                 <td>
-                                                  <form class="form-horizontal" method="POST" action="{{ route('addresses.destroy', [$address->id]) }}">
-                                                      {{ method_field('DELETE') }}
-                                                      <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                      <button class="btn btn-danger center-block" type="submit">Delete</button>
-                                                  </form>
+                                                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    @if(!$address->primary)
+                                                      <form class="form-horizontal" method="POST" action="{{ route('address.makeprimary', [Auth::user()->id, $address->id]) }}">
+                                                          <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                          <button class="btn btn-warning center-block" type="submit">Primary</button>
+                                                      </form>
+                                                    @endif
+                                                  </div>
+                                                  <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+                                                    <form class="form-horizontal" method="POST" action="{{ route('addresses.destroy', [$address->id]) }}">
+                                                        {{ method_field('DELETE') }}
+                                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                        <button class="btn btn-danger center-block" type="submit">Delete</button>
+                                                    </form>
+                                                  </div>
                                                 </td>
                                           </tr>
                                     @endforeach

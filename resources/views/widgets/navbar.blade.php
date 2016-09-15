@@ -16,6 +16,21 @@
                   <ul class="nav navbar-nav navbar-right">
                         @if(Auth::check())
                               <li>
+                                    <a class="hidden-md hidden-lg" href="{{ route('orders.index') }}">
+                                          <span class="glyphicon glyphicon-list-alt"></span> Services
+                                    </a>
+                              </li>
+                              <li>
+                                    <a class="hidden-md hidden-lg" href="{{ route('customer.orders', [ Auth::user()->id ]) }}">
+                                          <span class="glyphicon glyphicon-time"></span> Orders
+                                    </a>
+                              </li>
+                              <li>
+                                    <a class="hidden-md hidden-lg" href="{{ route('customers.edit', [ Auth::user()->id ]) }}">
+                                          <span class="glyphicon glyphicon-cog"></span> Settings
+                                    </a>
+                              </li>
+                              <li>
                                     <a href="{{ route('orders.index') }}">
                                           <span class="glyphicon glyphicon-user"></span> {{ Auth::user()->full_name }}
                                     </a>
