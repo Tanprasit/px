@@ -35,7 +35,7 @@
                                     <p>{!! \Session::get('message') !!}</p>
                               </div>
                         @endif
-                        <h1 class="page-header">Your Details <a class="btn btn-primary pull-right" onclick="document.getElementById('customer-form').submit()">Update</a></h1>
+                        <h1 class="page-header">My Account <a class="btn btn-primary pull-right" onclick="document.getElementById('customer-form').submit()">Update</a></h1>
                         <div class="row">
                               <!-- Form to update the user's details -->
                               <form id="customer-form" class="form-horizontal" action="{{ route('customers.update', [ Auth::user()->id ]) }}" method="POST" role="form">
@@ -118,7 +118,7 @@
                         <br>
                         <!-- Table display all cards linked with current user -->
                         <h2 class="sub-header">
-                              Payment Details           
+                              My Cards           
                               <btn class="btn btn-primary pull-right" data-toggle="modal" data-target="#addCard">
                                     Add Card
                               </btn>
@@ -169,7 +169,7 @@
                         <br>
                         <!-- Table to display all address associated with current user -->
                         <h2 class="sub-header">
-                              Addresses           
+                              My Addresses           
                               <btn class="btn btn-primary pull-right" data-toggle="modal" data-target="#add-address">
                                     Add Address
                               </btn>
@@ -227,9 +227,8 @@
       <script src="https://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
       <script>
         $(function () {
-          
           $('[data-toggle="tooltip"]').tooltip();
-        $('#payment-table, #addresses-table').DataTable({
+          $('#payment-table, #addresses-table').DataTable({
             "scrollX": true
           });
         });

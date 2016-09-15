@@ -47,8 +47,8 @@ class OrderController extends Controller
 
             return view('orders.create', compact('orders', 'quantities', 'totals'));
         } else {
-            return Redirect::back()
-                ->with('message', 'Your cart is empty!');   
+            return Redirect::route('orders.index')
+                ->with('message', 'Your cart is empty! Please make an order.');   
         }
     }
 

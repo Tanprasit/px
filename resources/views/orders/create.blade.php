@@ -29,6 +29,12 @@
                   
                   <!-- Table that breaks down the order -->
                   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                        @if(\Session::has('errors'))
+                              <div class="alert alert-danger">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <p>{!! \Session::get('errors') !!}</p>
+                              </div>
+                        @endif
                         <h1 class="page-header">Checkout</h1>
                         <table class="table table-hover">
                               <thead>
@@ -52,13 +58,34 @@
                         </table>
                         <div class="row">
                               <!-- Pick-up/ Drop-off address selection -->
-                              <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                                    <h3 class="sub-header">Primary Address</h3>
+                              <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+                                    <h3 class="sub-header">Address</h3>
+                                    @if($address = Auth::user()->getPrimaryAddress())
+                                          <p>{{ $address->address_line_1 }}</p>
+                                          <p>{{ $address->address_line_2 }}</p>
+                                          <p>{{ $address->town_city }}</p>
+                                          <p>{{ $address->county }}</p>
+                                          <p>{{ $address->postcode }}</p>
+                                    @else
+                                          <a class="btn btn-primary" href="{{ route('customers.edit', [Auth::user()->id]) }}"> Add Address</a>
+                                    @endif
                               </div>
 
                               <!-- Card information -->
-                              <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                                    
+                              <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                                     <h3 class="sub-header">Payment method</h3>
+                                     @if($card = Auth::user()->getPrimaryCard())
+                                           <p>{{ $card->type }} ending in {{ $card->getLastDigits() }}</p>
+                                           <p>{{ $card->name }}</p>
+                                           <p>{{ $card->getExpireDate() }}</p>
+                                     @else
+                                           <a class="btn btn-primary" href="{{ route('customers.edit', [Auth::user()->id]) }}"> Add Card</a>
+                                     @endif
+                              </div>
+
+                              <div class="col-xs-6 col-sm-6 col-md-4 col-lg-4">
+                                    <h3 class="sub-header">Order Summary</h3>
+                                    <a class="btn btn-warning" href="{{ route('customer.makeorder', [Auth::user()->id]) }}">Proceed To Payment</a>
                               </div>
                         </div>
                   </div>

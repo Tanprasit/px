@@ -32,6 +32,11 @@ class Card extends Model
             return str_repeat('X', strlen($this->number) - 4) . substr($this->number, -4);
       }
 
+      // Get the last four numbers of a card
+      public function getLastDigits() {
+            return substr($this->number, strlen($this->number) - 4);
+      }
+
       // Get an easy to read expire date.
       public function getExpireDate() {
             $dt = Carbon::parse($this->expires);

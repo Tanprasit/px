@@ -33,20 +33,24 @@ Route::group(['middleware' => ['web']], function () {
             Route::resource('orders', 'OrderController');
             Route::resource('addresses', 'AddressController');
 
-            // A route to display a list of outstanding orders
-            Route::get('customers/{customer}/orders', 'CustomerController@getOutstandingOrders')->name('customer.orders');
+            // A route to display a list of outstanding orders.
+            Route::get('customers/{customer}/orders', 'CustomerController@getOrders')->name('customer.orders');
 
-            // A route for customer to add new cards
+            // A route for customer to add new cards.
             Route::post('customers/{customer}/card/add', 'CustomerController@addNewCard')->name('customer.addcard'); 
             // A route to delete a card
             Route::delete('customers/{customer}/card/delete', 'CustomerController@deleteCard')->name('customer.deletecard'); 
 
-            // A route for customer to add new order to their cart
+            // A route for customer to add new order to their cart.
             Route::post('customers/{customer}/cart/add/order/{order}', 'CustomerController@addToCart')->name('customer.addtocart');
-           // A route for customer to remove an order from their cart
+           // A route for customer to remove an order from their cart.
             Route::post('customers/{customer}/cart/remove/order/{order}', 'CustomerController@removeFromCart')->name('customer.removefromcart');
 
-            // A route for customer to make an address a primary
-            Route::post('customer/{customer}/address/{address}/make/primary', 'CustomerController@makePrimary')->name('address.makeprimary');
+            // A route for customer to make an address a primary.
+            Route::post('customers/{customer}/address/{address}/make/primary', 'CustomerController@makePrimary')->name('address.makeprimary');
+            // A route for customer to change their primary address.
+
+            // A route for customer to make an order and take payment.
+            Route::get('csutomers/{customer}/make/order', 'CustomerController@makeOrder')->name('customer.makeorder');
       });
 });

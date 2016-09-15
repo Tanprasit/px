@@ -12,6 +12,7 @@ use App\Customer;
 use App\Card;
 use App\Order;
 use Auth;
+use Carbon\Carbon;
 
 class CustomerController extends Controller
 {   
@@ -167,10 +168,12 @@ class CustomerController extends Controller
     }
 
     //  Get a list of outstanding orders belong to a user
-    public function getOutstandingOrders($id) {
+    public function getOrders($id) {
         $customer = Customer::findOrFail($id);
-        $orders = $customer->orders()->get();
-        return view('customers.orders', compact('orders'));
+        $outstandingOrders = $customer->orders()->where('completed' , false)->get();
+        $completedOrders = $customer->orders()->where('completed', true)->get();
+
+        return view('customers.orders', compact('outstandingOrders', 'completedOrders'));
     }
 
     public function addNewCard(Request $request, $id) {
@@ -237,5 +240,47 @@ class CustomerController extends Controller
         // Grab item information from form.
 
         // Add item to session basket
+    }
+
+    // Make orders using the session and proceed with stripe
+    public function makeOrder(Request $request) {
+        $errorMessage = "";
+        // Check if user has a primary address.
+        if (!Auth::user()->getPrimaryAddress()) {
+            $errorMessage .= 'You need to add an address! ';
+        }
+
+        // Check if user has a primary card.
+        if (!Auth::user()->getPrimaryCard()) {
+            $errorMessage .= 'You need to add a card! ';
+        }
+
+        // If there are error message break out now with the error message
+        if ($errorMessage) {
+            return Redirect::back()
+                ->with('errors',   $errorMessage);
+        }
+
+        // If cart is not null, grab all order ids
+        if ($orders = $request->session()->get('cart')) {
+            foreach ($orders as $orderId => $quantity) {
+                // For each order get the order object
+                $order = Order::findOrFail($orderId);
+                Auth::user()->orders()->attach($order->id, [
+                    'quantity' => $quantity,
+                    'discount_amount' => 0.00,
+                    'order_date' => Carbon::now()->toDateTimeString(),
+                    'delivery_date' => Carbon::now()->addDays(7)->toDateTimeString(),
+                    'completed' => false,
+                ]);
+            }
+        }
+
+        // Empty the cart.
+        $request->session()->forget('cart');
+
+        // Make a customer order and save it to the database
+        return Redirect::route('customer.orders', [Auth::user()->id])
+            ->with('message', 'Success, thank you for make an order!');
     }
 }

@@ -3,7 +3,10 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
+
 use App\Address;
+use App\Card;
 
 class Customer extends Authenticatable
 {
@@ -20,7 +23,7 @@ class Customer extends Authenticatable
             'remember_token'
       ];
 
-      // Customer has many orders. 
+      // Get all order lated to this user
       public function orders() {
             return $this->belongsToMany('App\Order')
                   ->withPivot('quantity', 'discount_amount', 'order_date', 'delivery_date', 'completed')
@@ -35,5 +38,23 @@ class Customer extends Authenticatable
       // A customer can have many addresses.
       public function addresses() {
             return $this->hasMany('App\Address');
+      }
+
+      // Get primary addressess.
+      public function getPrimaryAddress() {
+            return Address::where('customer_id', $this->id)
+                  ->where('primary', true)
+                  ->first();
+      }
+
+      // Get primary card.
+      public function getPrimaryCard() {
+            return Card::where('customer_id', $this->id)
+                  ->where('primary', true)
+                  ->first();
+      }
+
+      public function makeOrder(Request $request) {
+
       }
 }
