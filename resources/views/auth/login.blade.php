@@ -75,6 +75,7 @@
                     </h3>
                 </div>
                 <div class="panel-body text-center">
+                    <p>Sign up for our services now...</p>
                     <a class="btn btn-primary" href="{{ url('/register') }}">Register</a>
                 </div>
             </div>
